@@ -1,4 +1,5 @@
 .PHONY: clean data lint requirements sync_data_to_s3 sync_data_from_s3
+.PHONY: lab_run notebook_run
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -20,6 +21,14 @@ endif
 # COMMANDS                                                                      #
 #################################################################################
 
+## run jupyter lab
+lab_run:
+	bash $(PROJECT_DIR)/scripts/jupyter-run.sh lab
+
+## run jupyter notebook
+notebook_run:
+	bash $(PROJECT_DIR)/scripts/jupyter-run.sh notebook
+
 ## Install Python Dependencies
 requirements: test_environment
 	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
@@ -33,6 +42,8 @@ data: requirements
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
+	find . -type d -name .ipynb_checkpoints -exec rm -rf {} \;
+	find . -type d -name src.egg-info -exec rm -rf {} \;  # may need to remove this
 
 ## Lint using flake8
 lint:
