@@ -6,10 +6,11 @@
 #################################################################################
 
 PROJECT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-BUCKET = {{ cookiecutter.s3_bucket }}
-PROFILE = {{ cookiecutter.aws_profile }}
-PROJECT_NAME = {{ cookiecutter.repo_name }}
-PYTHON_INTERPRETER = {{ cookiecutter.python_interpreter }}
+BUCKET = [OPTIONAL] your-bucket-for-syncing-data (do not include 's3://')
+PROFILE = default
+PROJECT_NAME = db-metadata2
+PROJECT_LIB_NAME = db_metadata2
+PYTHON_INTERPRETER = python3
 
 ifeq (,$(shell which conda))
 HAS_CONDA=False
@@ -42,8 +43,8 @@ data: requirements
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
-	find . -type d -name .ipynb_checkpoints -exec rm -rf {} \;
-	find . -type d -name src.egg-info -exec rm -rf {} \;  # may need to remove this
+	find . -type d -name ".ipynb_checkpoints" -exec rm -rf {} \;
+	find . -type f -name "$(PROJECT_LIB_NAME).egg-info" -exec rm -rf {} \;
 
 ## Lint using flake8
 lint:
