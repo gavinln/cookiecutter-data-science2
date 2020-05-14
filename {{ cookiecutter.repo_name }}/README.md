@@ -32,7 +32,7 @@ Project Organization
     │                         generated with `pip freeze > requirements.txt`
     │
     ├── setup.py           <- makes project pip installable (pip install -e .) so library can be imported
-    ├── {{cookiecutter.repo_name}}                <- Source code for use in this project.
+    ├── {{cookiecutter.lib_name}}  <- Source code for use in this project.
     │   ├── __init__.py    <- Makes this a Python module
     │   │
     │   ├── data           <- Scripts to download or generate data
